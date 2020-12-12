@@ -23,7 +23,7 @@ public class FilterParams {
      * @param args Array with begin parameters of program
      */
     public FilterParams(String args[]) {
-        int sizeX = 10, sizeY = 10, spaceX = 0, spaceY = 0;
+        int sizeX = 10, sizeY = 10, spaceX = 0, spaceY = 0, mode = Parameters.UI_MODE_DEFAULT;
         List<Integer> quantityOfChairsToReserve = new ArrayList<>();
         
         if (this.inArray("-sizeX", args)) {
@@ -46,12 +46,22 @@ public class FilterParams {
             spaceY = this.readArgumentFromArray("-spaceY", args);
             args = this.removeArgumentFromArray("-spaceY", args);
         }
- 
+        
+        if (this.inArray("-mode", args)) {
+            mode = this.readArgumentFromArray("-mode", args);
+            args = this.removeArgumentFromArray("-mode", args);
+            
+            if (mode != Parameters.UI_MODE_CONSOLE && mode != Parameters.UI_MODE_GRAPHIC) {
+                //set deafult
+                mode = Parameters.UI_MODE_DEFAULT; 
+            }
+        }
+       
         for (String arg : args) {
             quantityOfChairsToReserve.add(Integer.parseInt(arg));
         }
             
-        this.parameters = new Parameters(sizeX, sizeY, spaceX, spaceY, quantityOfChairsToReserve);
+        this.parameters = new Parameters(sizeX, sizeY, spaceX, spaceY, quantityOfChairsToReserve, mode);
     }
     
     /**
