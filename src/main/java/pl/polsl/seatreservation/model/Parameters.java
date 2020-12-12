@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Parameters {
 
-    public static final int UI_MODE_DEFAULT = 2;
+    public static final int UI_MODE_DEFAULT = 1;
     public static final int UI_MODE_CONSOLE = 1;
     public static final int UI_MODE_GRAPHIC = 2;
     /**
