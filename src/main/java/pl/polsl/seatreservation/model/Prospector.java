@@ -1,10 +1,10 @@
-
 package pl.polsl.seatreservation.model;
 
 /**
+ * Class implements algoright to reserved chairs in cinema hall.
  *
  * @author Piotr Kuźnik
- * @version 1.11
+ * @version 1.12
  */
 public class Prospector {
 
@@ -12,20 +12,20 @@ public class Prospector {
      * #var CinemaHall object of Cinema Hall
      */
     private final CinemaHall hall;
-    
+
     /**
      * @var int Number of free chairs between reserved in row
      */
     private final int spaceX;
-    
+
     /**
      * @var int Number of free chairs between reserved in column
      */
     private final int spaceY;
 
     /**
-     * Constructor 
-     * 
+     * Constructor
+     *
      * @param hall Object CinemaHall
      * @param spaceX Number of free chairs between reserved in row
      * @param spaceY Number of free chairs between reserved in column
@@ -37,36 +37,45 @@ public class Prospector {
     }
 
     /**
-     * method find next free chairs to reserved 
-     * @param quantityChairs number 
+     * method find next free chairs to reserved
+     *
+     * @param quantityChairs number
      * @return On success object CombinationOfPlace of coords in hall
      * @throws SeatReservationException on errror when cannot reserwation
      */
     public CombinationOfPlace findNextToTheChairNextToYou(int quantityChairs) throws SeatReservationException {
-        int freeChairsInRow;
-        int startX, endX;
-        for (int numberColumn = 1; numberColumn <= this.hall.getQuantityOfChairsInColumn(); numberColumn++) {
-            startX = 1;
-            freeChairsInRow = 0;
-            for (int numberRow = 1; numberRow <= this.hall.getQuntityOfchairsInRow(); numberRow++) {
-                endX = numberRow;
-                if (this.hall.isChairReserved(numberColumn, numberRow)) {
+        int freeChairsInRow = 0;
+        int startX = 1, endX, startY = 1;
+        for (int numberRow = 1; numberRow <= this.hall.getQuantityOfChairsInColumn(); numberRow++) {
+            if (quantityChairs <= this.hall.getQuntityOfchairsInRow()) {
+                freeChairsInRow = 0;
+                startX = 1;
+               
+            }
+            if (freeChairsInRow == 0) {
+                startY = numberRow;
+                startX = 1;
+            }
+
+            for (int numberChair = 1; numberChair <= this.hall.getQuntityOfchairsInRow(); numberChair++) {
+                endX = numberChair;
+                if (this.hall.isChairReserved(numberRow, numberChair)) {
                     freeChairsInRow = 0;
-                    startX = numberRow + this.spaceX;
+                    startX = numberChair + this.spaceX;
+                    startY = numberRow;
                 } else {
                     freeChairsInRow++;
                 }
-                    
-                
-                //System.out.println("Find::" + quantityChairs + " coordinate(" + numberRow + ", " + numberColumn + ") free=" + freeChairsInRow + " prepare (" + startX + ", " + numberColumn + ", " + endX + ", " + numberColumn + ")" );
+
+                //System.out.println("Find::" + quantityChairs + " coordinate(" + numberChair + ", " + numberRow + ") free=" + freeChairsInRow + " prepare (" + startX + ", " + startY + ", " + endX + ", " + numberRow + ")" );
                 if (freeChairsInRow >= quantityChairs) {
-                    return new CombinationOfPlace(startX, numberColumn, endX, numberColumn);
+                    return new CombinationOfPlace(startX, startY, endX, numberRow);
                 }
             }
 
-            numberColumn += this.spaceY;
+            numberRow += this.spaceY;
         }
-        
+
         throw new SeatReservationException("Brak możliwości zarezerowania " + quantityChairs + " miejsc!");
     }
 

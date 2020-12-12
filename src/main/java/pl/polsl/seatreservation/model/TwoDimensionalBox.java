@@ -60,13 +60,10 @@ public class TwoDimensionalBox<T> {
      * @param value T default value to set all cell
      */
     public void add(int x, int y, T value) {
-        List<T> rows ;
-        if (x >= 0 && x <= this.sizeX && y >= 0 && y <= this.sizeY) {
-            rows = this.contents.get(y);
-            rows.set(x, value);
+        List<T> rows = this.contents.get(y);
+        rows.set(x, value);
 
-            this.contents.set(y, rows);
-        }
+        this.contents.set(y, rows);
     }
 
     /**
@@ -77,11 +74,7 @@ public class TwoDimensionalBox<T> {
      * @return Return value about coordinate (x,y)
      */
     public T get(int x, int y) {
-        if (x >= 0 && x <= this.sizeX && y >= 0 && y <= this.sizeY) {
-            return this.contents.get(y).get(x);
-        }
-
-        return null;
+        return this.contents.get(y).get(x);
     }
 
     /**
