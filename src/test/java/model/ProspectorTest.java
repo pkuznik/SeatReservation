@@ -19,7 +19,7 @@ import pl.polsl.seatreservation.model.CinemaHall;
 /**
  *
  * @author Piotr Kuźnik
- * @version 1.0
+ * @version 1.1
  */
 public class ProspectorTest {
 
@@ -37,5 +37,24 @@ public class ProspectorTest {
             error = true;
         }
         assertFalse(error, "Błędny algorytm nie można nic zarezerwować!");
+    }
+    
+    @DisplayName("Test sytuacji wyjątkowej - przepełnienie")
+    @Test
+    public void testOwerflowCienameHall() {
+        CinemaHall hall = new CinemaHall(10, 10);
+        Prospector prospector = new Prospector(hall, 0, 0);
+        Boolean error = false;
+        
+        try {
+            prospector.findNextToTheChairNextToYou(10);
+            prospector.findNextToTheChairNextToYou(20);
+            prospector.findNextToTheChairNextToYou(30);
+            prospector.findNextToTheChairNextToYou(40);
+            prospector.findNextToTheChairNextToYou(1); //overflow
+        } catch (SeatReservationException e) {
+            error = true;
+        }
+        assertTrue(error, "Nie obsłużono przepełnienia sali kinowej!");
     }
  }
