@@ -4,7 +4,7 @@ package pl.polsl.seatreservation.model;
  * Collection chairs in one cinema hall
  *
  * @author Piotr Kuźnik
- * @version 2.0
+ * @version 2.1
  */
 public class CinemaHall {
 
@@ -51,7 +51,7 @@ public class CinemaHall {
      * @return True if chair is reservation
      */
     public boolean isChairReserved(int numberColumn, int numberRow) {
-        return this.space.get(numberRow, numberColumn);
+        return this.space.get(numberRow, numberColumn) == true;
     }
 
     /**

@@ -8,7 +8,7 @@ import pl.polsl.seatreservation.model.CinemaHall;
  * or in the form of a list of occupied seats
  * 
  * @author Piotr Kuźnik
- * @version 2.0
+ * @version 2.1
  */
 public class CinemaHallRender {
  
@@ -31,7 +31,7 @@ public class CinemaHallRender {
      */
     public void renderingGraphicallyInConsole() {
       System.out.println("");
-      System.out.println("Sala kinowa o rozmiarze " + (this.cinemaHallModel.getQuntityOfchairsInRow() - 1) + "x" + (this.cinemaHallModel.getQuantityOfChairsInColumn() - 1));
+      System.out.println("Sala kinowa o rozmiarze " + this.cinemaHallModel.getQuntityOfchairsInRow() + "x" + this.cinemaHallModel.getQuantityOfChairsInColumn());
       
       System.out.print("_X_ ");
       for (int x = 1; x < this.cinemaHallModel.getQuntityOfchairsInRow(); x++) {
@@ -39,9 +39,9 @@ public class CinemaHallRender {
       }
       System.out.println("");
 
-      for (int y = 1; y < this.cinemaHallModel.getQuantityOfChairsInColumn(); y++) {
+      for (int y = 1; y <= this.cinemaHallModel.getQuantityOfChairsInColumn(); y++) {
             System.out.print("_" + y + "_ ");
-            for (int x = 1; x < this.cinemaHallModel.getQuntityOfchairsInRow(); x++) {
+            for (int x = 1; x <= this.cinemaHallModel.getQuntityOfchairsInRow(); x++) {
                 if (this.cinemaHallModel.isChairReserved(y, x)) {
                     System.out.print("[x]");
                 } else {

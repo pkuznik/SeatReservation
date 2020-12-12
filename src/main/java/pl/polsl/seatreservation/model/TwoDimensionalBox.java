@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Two-dimensional list
+ * 
  * @author Piotr Kuźnik
- * @version 1.0
+ * @version 1.1
  * @param <T> prefer Bool
  *
  */
@@ -39,9 +40,11 @@ public class TwoDimensionalBox<T> {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.contents = new ArrayList<>();
-        ArrayList<T> rows = new ArrayList<>();
-
+        
+        sizeX++;
+        sizeY++;
         for (int i = 1; i <= sizeY; i++) {
+            ArrayList<T> rows = new ArrayList<>();
             for (int j = 1; j <= sizeX; j++) {
                 rows.add(defaultValue);
             }

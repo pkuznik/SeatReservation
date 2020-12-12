@@ -1,6 +1,7 @@
 package pl.polsl.seatreservation.model;
 
 import java.util.*;
+import pl.polsl.seatreservation.view.InputData;
 
 /**
  * Model responsible for preparing the output data. the output can come from the
@@ -65,9 +66,13 @@ public class FilterParams {
         }
 
         for (String arg : args) {
-            quantityOfChairsToReserve.add(Integer.parseInt(arg));
+            try {
+                quantityOfChairsToReserve.add(Integer.parseInt(arg));
+            } catch (NumberFormatException e) {
+                System.out.println("Podany `" + arg + "` znak nie jest liczbą!");
+            }
         }
-
+       
         this.parameters = new Parameters(sizeX, sizeY, spaceX, spaceY, quantityOfChairsToReserve, mode);
     }
 
