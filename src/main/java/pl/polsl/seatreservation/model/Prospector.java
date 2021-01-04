@@ -30,10 +30,14 @@ public class Prospector {
      * @param spaceX Number of free chairs between reserved in row
      * @param spaceY Number of free chairs between reserved in column
      */
-    public Prospector(CinemaHall hall, int spaceX, int spaceY) {
+    public Prospector(CinemaHall hall, int spaceX, int spaceY) throws SeatReservationException {
         this.hall = hall;
         this.spaceX = spaceX;
         this.spaceY = spaceY;
+        
+        if (hall == null) {
+            throw new SeatReservationException("First argument must be instance of CinemaHall");
+        }
     }
 
     /**

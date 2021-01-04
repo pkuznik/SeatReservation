@@ -1,13 +1,8 @@
 
 package model;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import pl.polsl.seatreservation.model.Prospector;
@@ -27,9 +22,11 @@ public class ProspectorSmallHallTest {
     private final Prospector prospector;
 
     public ProspectorSmallHallTest() {
-        CinemaHall hall = new CinemaHall(10, 10);
-        this.prospector = new Prospector(hall, 0, 0);
-    }
+        try {
+            this.prospector = new Prospector( new CinemaHall(10, 10), 0, 0);
+        } catch (SeatReservationException e) {
+        }
+    } 
         
     /**
      * Test check reserved all from source array
@@ -38,8 +35,8 @@ public class ProspectorSmallHallTest {
      */
     @ParameterizedTest
     @ValueSource(ints = {2, 1, 2, 3, 4, 5, 6})
-    public void testSmallHall(Integer numberOfchairs) {
-        Boolean error = false;
+    public void testSmallHall(int numberOfchairs) {
+        boolean error = false;
         
         try {
             this.prospector.findNextToTheChairNextToYou(numberOfchairs);

@@ -5,10 +5,6 @@
  */
 package model;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +12,6 @@ import pl.polsl.seatreservation.model.Prospector;
 import pl.polsl.seatreservation.model.SeatReservationException;
 import pl.polsl.seatreservation.model.CinemaHall;
 import pl.polsl.seatreservation.model.CombinationOfPlace;
-import pl.polsl.seatreservation.view.CinemaHallRender;
 
 /**
  *
@@ -25,15 +20,25 @@ import pl.polsl.seatreservation.view.CinemaHallRender;
  */
 public class ProspectorTest {
 
+    @DisplayName("Próba rezerwacji ")
+    @Test
+    public void testEmptyCienemaHallForProspector() {
+        Boolean error = true;
+        try {
+            Prospector prospector = new Prospector(null, 0, 0);
+        } catch (SeatReservationException e) {
+            error = false;
+        }
+        assertFalse(error, "Błędny algorytm nie można używać algorytmu bez zdefiniowaia sali kinowej!");
+    }
+
     @DisplayName("Najprostszy test algorytmu ;-)")
     @Test
     public void testReserveChairsAlgorithIsReadyToUse() {
-
-        CinemaHall hall = new CinemaHall(10, 10);
-        Prospector prospector = new Prospector(hall, 0, 0);
         Boolean error = false;
 
         try {
+            Prospector prospector = new Prospector(new CinemaHall(10, 10), 0, 0);
             prospector.findNextToTheChairNextToYou(1);
         } catch (SeatReservationException e) {
             error = true;
@@ -44,11 +49,10 @@ public class ProspectorTest {
     @DisplayName("Test sytuacji wyjątkowej - rezerwacja dwóch rzędów")
     @Test
     public void testTwoRowsReservedInCienameHall() {
-        CinemaHall hall = new CinemaHall(10, 10);
-        Prospector prospector = new Prospector(hall, 0, 0);
         Boolean error = false;
 
         try {
+            Prospector prospector = new Prospector(new CinemaHall(10, 10), 0, 0);
             prospector.findNextToTheChairNextToYou(20);
         } catch (SeatReservationException e) {
             error = true;
@@ -60,10 +64,10 @@ public class ProspectorTest {
     @Test
     public void testOwerflowCienameHall() {
         CinemaHall hall = new CinemaHall(10, 10);
-        Prospector prospector = new Prospector(hall, 0, 0);
         Boolean error = false;
         CombinationOfPlace coordinate = null;
         try {
+            Prospector prospector = new Prospector(hall, 0, 0);
             coordinate = prospector.findNextToTheChairNextToYou(10);
             hall.reserveCombinateOfPlace(coordinate);
 
@@ -80,7 +84,7 @@ public class ProspectorTest {
         } catch (SeatReservationException e) {
             error = true;
         }
-        
+
         assertTrue(error, "Nie obsłużono przepełnienia sali kinowej! - " + coordinate);
     }
 }

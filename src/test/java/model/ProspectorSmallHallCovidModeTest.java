@@ -29,8 +29,7 @@ public class ProspectorSmallHallCovidModeTest {
 
     @BeforeEach
     public void setUp() {
-        CinemaHall hall = new CinemaHall(10, 10);
-        this.prospector = new Prospector(hall, 2, 1);
+        this.prospector = new Prospector( new CinemaHall(10, 10), 2, 1);
     }
 
     /**
@@ -40,7 +39,7 @@ public class ProspectorSmallHallCovidModeTest {
      */
     @ParameterizedTest
     @ValueSource(ints = {2, 1, 2, 3, 4, 5, 6})
-    public void testSmallHallInCovidMode(Integer numberOfchairs) {
+    public void testSmallHallInCovidMode(int numberOfchairs) {
         Boolean error = false;
 
         try {

@@ -13,7 +13,7 @@ public class CinemaHall {
      *
      * @var TwoDimensionalBox
      */
-    private final TwoDimensionalBox<Boolean> space;
+    private final TwoDimensionalBox<Boolean> twoDimensionalBox;
 
     /**
      * Construcotr
@@ -22,7 +22,7 @@ public class CinemaHall {
      * @param height number of chairs in column
      */
     public CinemaHall(int width, int height) {
-        this.space = new TwoDimensionalBox<>(width, height, false);
+        this.twoDimensionalBox = new TwoDimensionalBox<>(width, height, false);
     }
 
     /**
@@ -31,7 +31,7 @@ public class CinemaHall {
      * @return quantity of chairs in one column
      */
     public int getQuantityOfChairsInColumn() {
-        return this.space.getColumnSize();
+        return this.twoDimensionalBox.getColumnSize();
     }
 
     /**
@@ -40,7 +40,7 @@ public class CinemaHall {
      * @return quantity of chairs in one row
      */
     public int getQuntityOfchairsInRow() {
-        return this.space.getRowSize();
+        return this.twoDimensionalBox.getRowSize();
     }
 
     /**
@@ -51,7 +51,7 @@ public class CinemaHall {
      * @return True if chair is reservation
      */
     public boolean isChairReserved(int numberColumn, int numberRow) {
-        return this.space.get(numberRow, numberColumn) == true;
+        return this.twoDimensionalBox.get(numberRow, numberColumn) == true;
     }
 
     /**
@@ -63,7 +63,7 @@ public class CinemaHall {
      */
     public boolean reserveChair(int numberColumn, int numberRow) {
         if (isChairReserved(numberColumn, numberRow) == false) {
-            this.space.add(numberRow, numberColumn, true);
+            this.twoDimensionalBox.add(numberRow, numberColumn, true);
             return true;
         }
 

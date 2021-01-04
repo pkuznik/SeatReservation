@@ -1,6 +1,5 @@
 package pl.polsl.seatreservation.controller;
 
-import pl.polsl.seatreservation.model.FilterParams;
 import pl.polsl.seatreservation.model.CinemaHall;
 import pl.polsl.seatreservation.model.CombinationOfPlace;
 import pl.polsl.seatreservation.model.Parameters;
@@ -33,7 +32,9 @@ public class SeatReservation {
      */
     public SeatReservation(Parameters parameters) {
         this.hall = new CinemaHall(parameters.getSizeX(), parameters.getSizeY());
-        this.prospector = new Prospector(this.hall, parameters.getSpaceX(), parameters.getSpaceY());
+        try {
+            this.prospector = new Prospector(this.hall, parameters.getSpaceX(), parameters.getSpaceY());
+        } catch (SeatReservationException e) {}
     }
 
     /**

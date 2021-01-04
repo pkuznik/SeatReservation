@@ -10,8 +10,19 @@ import java.util.List;
  */
 public class Parameters {
 
+    /** 
+     * @var int Default mode to run program
+     */
     public static final int UI_MODE_DEFAULT = 1;
+    
+    /**
+     * @var int Console mode to run program
+     */
     public static final int UI_MODE_CONSOLE = 1;
+    
+    /**
+     * @var int Graphic mode to run program
+     */
     public static final int UI_MODE_GRAPHIC = 2;
     /**
      * @var int number of chairs in a row available in the cinema room
@@ -39,7 +50,7 @@ public class Parameters {
     private final List<Integer> quantityOfChairsToReserve;
 
     /**
-     * @var
+     * @var int UI Mode 
      */
     private final int uiMode;
 

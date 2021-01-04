@@ -1,11 +1,13 @@
-package pl.polsl.seatreservation.model;
+package pl.polsl.seatreservation.controller;
 
 import java.util.*;
+import pl.polsl.seatreservation.model.Parameters;
 import pl.polsl.seatreservation.view.InputData;
 
 /**
- * Model responsible for preparing the output data. the output can come from the
- * command line (program startup), but it can also be retrieved from the user
+ * This class is responsible for analyzing the input data.
+ * The output can come from the command line (program startup), 
+ * but it can also be retrieved from the user
  *
  * @author Piotr Kuźnik
  * @version 3.0

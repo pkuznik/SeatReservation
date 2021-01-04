@@ -1,17 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pl.polsl.seatreservation.model;
 
 /**
- *
- * @author pkuzn
+ * This class is domain exception model
+ * 
+ * @author Piotr Kuźnik
+ * @version 1.12
  */
 public class SeatReservationException extends Exception{
     
     /**
+     * Constructor
      * 
      * @param message Message of error 
      */
