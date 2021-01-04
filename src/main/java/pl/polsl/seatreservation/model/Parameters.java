@@ -11,17 +11,17 @@ import java.util.List;
 public class Parameters {
 
     /** 
-     * @var int Default mode to run program
+     * Default mode to run program
      */
     public static final int UI_MODE_DEFAULT = 1;
     
     /**
-     * @var int Console mode to run program
+     * Console mode to run program
      */
     public static final int UI_MODE_CONSOLE = 1;
     
     /**
-     * @var int Graphic mode to run program
+     * Graphic mode to run program
      */
     public static final int UI_MODE_GRAPHIC = 2;
     /**

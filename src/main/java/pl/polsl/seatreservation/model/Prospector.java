@@ -29,6 +29,8 @@ public class Prospector {
      * @param hall Object CinemaHall
      * @param spaceX Number of free chairs between reserved in row
      * @param spaceY Number of free chairs between reserved in column
+     * 
+     * @throws SeatReservationException throw when param hall is null
      */
     public Prospector(CinemaHall hall, int spaceX, int spaceY) throws SeatReservationException {
         this.hall = hall;
