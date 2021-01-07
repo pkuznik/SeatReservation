@@ -12,7 +12,7 @@ import pl.polsl.seatreservation.view.ReservationWindow;
  * Main app controller
  *
  * @author Piotr Kuźnik
- * @version 2.0
+ * @version 3.0
  */
 public class SeatReservation {
 
@@ -27,7 +27,8 @@ public class SeatReservation {
     private Prospector prospector;
 
     /**
-     *
+     * Constructor 
+     * 
      * @param parameters Input parametres
      */
     public SeatReservation(Parameters parameters) {
@@ -38,7 +39,8 @@ public class SeatReservation {
     }
 
     /**
-     *
+     * Set new size cinema hall
+     * 
      * @param sizeX quantity chairs in row
      * @param sizeY quantity chairs in column
      */
@@ -46,6 +48,18 @@ public class SeatReservation {
         this.hall = new CinemaHall(sizeX, sizeY);
     }
 
+    /**
+     * Set new Covid Config
+     * 
+     * @param spaceInRow space in row beetwen chairs reserved
+     * @param spaceInColumn space in column beetwen chairs reserved
+     */
+    public void setSpaceBeetwenChairsReserved(int spaceInRow, int spaceInColumn) {
+        try {
+            this.prospector = new Prospector(this.hall,spaceInRow, spaceInColumn);
+        } catch (SeatReservationException e) {}
+    }
+    
     /**
      *
      * @return quantity of chairs in one row

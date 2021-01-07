@@ -127,6 +127,11 @@ public class ReservationWindow extends javax.swing.JFrame {
         YInput.setToolTipText("Ilośc krzeseł które mają być puste w kolumnie pomiędzy zarezerwowanymi");
 
         button.setText("Ustaw");
+        button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout SpacePanelLayout = new javax.swing.GroupLayout(SpacePanel);
         SpacePanel.setLayout(SpacePanelLayout);
@@ -278,7 +283,7 @@ public class ReservationWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Execute action after on click settings button
+     * Execute action after on click size hall settings button
      *
      * @param evt ActionEvent as java.awt.event.ActionEvent
      */
@@ -325,6 +330,26 @@ public class ReservationWindow extends javax.swing.JFrame {
 
         msg.showInfo("Utworzono rezerwację!");
     }//GEN-LAST:event_reservedButtonActionPerformed
+
+    /**
+     * Execute action after on click covid settings button
+     * @param evt 
+     */
+    private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
+         int spaceInRow, spaceInColumn;
+        MessageDialog msg = new MessageDialog();
+        try {
+            spaceInRow = Integer.parseInt(this.XInput.getText());
+            spaceInColumn = Integer.parseInt(this.YInput.getText());
+        } catch (NumberFormatException e) {
+            msg.showWarming(e.getMessage());
+            return;
+        }
+        this.controller.setSpaceBeetwenChairsReserved(spaceInRow, spaceInColumn);
+        buildCinemaHallPanel();
+
+        msg.showInfo("Wytyczne COVID dla sali kinowej zostały zaktualizowane!");
+    }//GEN-LAST:event_buttonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
