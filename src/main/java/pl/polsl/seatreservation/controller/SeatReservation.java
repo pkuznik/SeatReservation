@@ -65,27 +65,26 @@ public class SeatReservation {
     /**
      *
      * @param quantityOfChairs quantity chairs to reserved
+     * @throws pl.polsl.seatreservation.model.SeatReservationException
      */
-    public void reserveQuantityOfChairs(int quantityOfChairs) {
+    public void reserveQuantityOfChairs(int quantityOfChairs) throws SeatReservationException {
         CombinationOfPlace coordinate;
         try {
             coordinate = this.prospector.findNextToTheChairNextToYou(quantityOfChairs);
             hall.reserveCombinateOfPlace(coordinate);
         } catch (SeatReservationException exception) {
-            System.out.println("Błąd! " + exception.getMessage());
+            throw new SeatReservationException("Nie można utworzyć rezerwacji! " + exception.getMessage());
         }
     }
-
+    
     /**
-     *
-     * @return Model for ListInput
+     * 
+     * @return  object of CinemaHall
      */
-    public javax.swing.AbstractListModel<String> renderGraficToModelList() {
-        CinemaHallRender render = new CinemaHallRender(this.hall);
-
-        return render.genericModel();
+    public CinemaHall getHall() {
+        return this.hall;
     }
-
+    
     /**
      *
      * @param args the argument array passed to the program. Parameters can be
@@ -142,7 +141,11 @@ public class SeatReservation {
 
         if (params.getUIMode() == Parameters.UI_MODE_CONSOLE) {
             params.getQuantityOfChairsToReserve().forEach(quantityOfChairs -> {
-                controller.reserveQuantityOfChairs(quantityOfChairs);
+                try {
+                    controller.reserveQuantityOfChairs(quantityOfChairs);
+                } catch (SeatReservationException e) {
+                    System.out.println(e.getMessage());
+                }
             });
 
             CinemaHallRender render = new CinemaHallRender(controller.hall);

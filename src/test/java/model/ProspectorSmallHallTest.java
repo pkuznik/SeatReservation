@@ -19,7 +19,7 @@ public class ProspectorSmallHallTest {
      /**
      * @var Prospector algorithm searching for free seats in the cinema room 
      */
-    private final Prospector prospector;
+    private Prospector prospector;
 
     public ProspectorSmallHallTest() {
         try {

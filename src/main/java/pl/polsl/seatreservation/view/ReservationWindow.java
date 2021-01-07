@@ -1,12 +1,18 @@
-
 package pl.polsl.seatreservation.view;
 
+import java.awt.Component;
+import java.util.List;
 import pl.polsl.seatreservation.controller.SeatReservation;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import pl.polsl.seatreservation.model.SeatReservationException;
 
 /**
+ * Class is prepare frame window
  *
  * @author Piotr Kuźnik
- * @version 1.0
+ * @version 3.0
  */
 public class ReservationWindow extends javax.swing.JFrame {
 
@@ -14,18 +20,71 @@ public class ReservationWindow extends javax.swing.JFrame {
      * Main controller app
      */
     private final SeatReservation controller;
-    
+
+    /**
+     * Object instance of JTable to representation cinemaHall
+     */
+    private JTable table;
+
     /**
      * Creates new form ReservationWindow
+     *
      * @param controller Main controller app
      */
     public ReservationWindow(SeatReservation controller) {
-        initComponents();
-        
         this.controller = controller;
-        
+
+        initComponents();
+
+        this.setTitle("Rezerwacja miejsc w sali kinowej");
+
         this.quantityOfChairsInColumnHall.setText("" + controller.getHeightCinemaHall());
         this.quantityOfChairsInRowHall.setText("" + controller.getWidthCinemaHall());
+    }
+
+    private void buildCinemaHallPanel() {
+       
+        this.table = new JTable();
+        loadDataToTableModel();
+
+        this.CinemaHallPanel.getViewport().add(table);
+        this.setVisible(true);
+        this.CinemaHallPanel.repaint();
+
+    }
+
+    /**
+     * Create model for table
+     */
+    private void loadDataToTableModel() {
+         String[] columns = new String[this.controller.getWidthCinemaHall() + 1];
+        for (int i = 0; i < this.controller.getWidthCinemaHall(); i++) {
+            columns[i] = "" + (i + 1);
+        }
+        columns[this.controller.getWidthCinemaHall()] = "Miejsce \\ Rząd";
+        this.table.setModel(new javax.swing.table.DefaultTableModel(
+                this.controller.getHall().getTwoDimensionalBox().toArray(),
+                columns
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+
+        });
+
+
+        table.getTableHeader().setDefaultRenderer(new TableHeaderRenderer());
+        table.getColumnModel().getColumn(this.controller.getWidthCinemaHall()).setCellRenderer(new TableHeaderRenderer());
+        table.getColumnModel().getColumn(this.controller.getWidthCinemaHall()).setMinWidth(130);
+
+        for (int i = 0; i < this.controller.getWidthCinemaHall(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(new TableChairCellRenderer());
+        }
+
+        table.setFocusable(false);
+        table.setRowSelectionAllowed(false);
+        table.getTableHeader().setReorderingAllowed(false);
     }
 
     /**
@@ -37,20 +96,73 @@ public class ReservationWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        SpacePanel = new javax.swing.JPanel();
+        label = new javax.swing.JLabel();
+        XInput = new javax.swing.JTextField();
+        YInput = new javax.swing.JTextField();
+        button = new javax.swing.JButton();
+        configurationHallPanel = new javax.swing.JPanel();
+        labelConfigCinemaHall = new javax.swing.JLabel();
         quantityOfChairsInRowHall = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listOfReservationChairsInHall = new javax.swing.JList<>();
         quantityOfChairsInColumnHall = new javax.swing.JTextField();
         applySettingsButton = new javax.swing.JButton();
+        ReservationPanel = new javax.swing.JPanel();
+        labelConfigSeparation1 = new javax.swing.JLabel();
         quantintyToReservedField = new javax.swing.JTextField();
         reservedButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        CinemaHallPanel = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setAutoRequestFocus(false);
+
+        SpacePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        label.setText("Konfiguracja odstępów pomiedzy rezerwacjami");
+
+        XInput.setText("0");
+        XInput.setToolTipText("Ilośc krzeseł które mają być puste w rzędzie pomiędzy zarezerwowanymi");
+
+        YInput.setText("0");
+        YInput.setToolTipText("Ilośc krzeseł które mają być puste w kolumnie pomiędzy zarezerwowanymi");
+
+        button.setText("Ustaw");
+
+        javax.swing.GroupLayout SpacePanelLayout = new javax.swing.GroupLayout(SpacePanel);
+        SpacePanel.setLayout(SpacePanelLayout);
+        SpacePanelLayout.setHorizontalGroup(
+            SpacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SpacePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(SpacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SpacePanelLayout.createSequentialGroup()
+                        .addComponent(XInput, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(YInput, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button))
+                    .addComponent(label, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+        SpacePanelLayout.setVerticalGroup(
+            SpacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SpacePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(label)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(SpacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SpacePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(button)
+                        .addComponent(YInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(XInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        configurationHallPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        labelConfigCinemaHall.setText("Konfiguracja sali kinowej");
 
         quantityOfChairsInRowHall.setToolTipText("Ilość krzeseł w rzędzie");
-
-        jScrollPane1.setViewportView(listOfReservationChairsInHall);
 
         quantityOfChairsInColumnHall.setToolTipText("Ilość rzędów");
 
@@ -62,6 +174,40 @@ public class ReservationWindow extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout configurationHallPanelLayout = new javax.swing.GroupLayout(configurationHallPanel);
+        configurationHallPanel.setLayout(configurationHallPanelLayout);
+        configurationHallPanelLayout.setHorizontalGroup(
+            configurationHallPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(configurationHallPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(configurationHallPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelConfigCinemaHall)
+                    .addGroup(configurationHallPanelLayout.createSequentialGroup()
+                        .addComponent(quantityOfChairsInRowHall, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(quantityOfChairsInColumnHall, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(applySettingsButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        configurationHallPanelLayout.setVerticalGroup(
+            configurationHallPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(configurationHallPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelConfigCinemaHall)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(configurationHallPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(configurationHallPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(quantityOfChairsInRowHall, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(applySettingsButton))
+                    .addComponent(quantityOfChairsInColumnHall, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        ReservationPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        labelConfigSeparation1.setText("Rezerwacja miejsc w sali kinowej");
+
         quantintyToReservedField.setToolTipText("Ilośc miejsc do zarezerwowania");
 
         reservedButton.setText("Rezerwuj");
@@ -71,7 +217,31 @@ public class ReservationWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Konfiguracja sali kinowej");
+        javax.swing.GroupLayout ReservationPanelLayout = new javax.swing.GroupLayout(ReservationPanel);
+        ReservationPanel.setLayout(ReservationPanelLayout);
+        ReservationPanelLayout.setHorizontalGroup(
+            ReservationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ReservationPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ReservationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelConfigSeparation1)
+                    .addGroup(ReservationPanelLayout.createSequentialGroup()
+                        .addComponent(quantintyToReservedField, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(reservedButton)))
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+        ReservationPanelLayout.setVerticalGroup(
+            ReservationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ReservationPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelConfigSeparation1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ReservationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(quantintyToReservedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reservedButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,75 +249,100 @@ public class ReservationWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(CinemaHallPanel)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(quantityOfChairsInRowHall, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(quantityOfChairsInColumnHall, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(applySettingsButton))
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(quantintyToReservedField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(configurationHallPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(reservedButton)))
+                        .addComponent(SpacePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ReservationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(configurationHallPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SpacePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ReservationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(quantityOfChairsInRowHall, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(quantityOfChairsInColumnHall, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(applySettingsButton))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(quantintyToReservedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reservedButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                .addComponent(CinemaHallPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        this.buildCinemaHallPanel();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
      * Execute action after on click settings button
-     * 
-     * @param evt ActionEvent as java.awt.event.ActionEvent 
+     *
+     * @param evt ActionEvent as java.awt.event.ActionEvent
      */
     private void applySettingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applySettingsButtonActionPerformed
-        int sizeX = Integer.parseInt(this.quantityOfChairsInRowHall.getText());
-        int sizeY = Integer.parseInt(this.quantityOfChairsInColumnHall.getText());
+        int sizeX, sizeY;
+        MessageDialog msg = new MessageDialog();
+        try {
+            sizeX = Integer.parseInt(this.quantityOfChairsInRowHall.getText());
+            sizeY = Integer.parseInt(this.quantityOfChairsInColumnHall.getText());
+        } catch (NumberFormatException e) {
+            msg.showWarming(e.getMessage());
+            return;
+        }
         this.controller.setHallSize(sizeX, sizeY);
+        buildCinemaHallPanel();
+
+        msg.showInfo("Rozmiar sali kinowej został zaktualizowany!");
     }//GEN-LAST:event_applySettingsButtonActionPerformed
 
     /**
      * Execute action after on click reserved button
-     * 
-     * @param evt ActionEvent as java.awt.event.ActionEvent 
+     *
+     * @param evt ActionEvent as java.awt.event.ActionEvent
      */
     private void reservedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservedButtonActionPerformed
-        int quantityOfChairs = Integer.parseInt(this.quantintyToReservedField.getText());
-        this.controller.reserveQuantityOfChairs(quantityOfChairs);
-        
-        
-        listOfReservationChairsInHall.setModel(this.controller.renderGraficToModelList());
+        int quantityOfChairs;
+        MessageDialog msg = new MessageDialog();
+
+        try {
+            quantityOfChairs = Integer.parseInt(this.quantintyToReservedField.getText());
+        } catch (NumberFormatException e) {
+            msg.showWarming("Wprowadzony znak nie jest liczbą! " + e.getMessage());
+            return;
+        }
+
+        try {
+            this.controller.reserveQuantityOfChairs(quantityOfChairs);
+        } catch (SeatReservationException e) {
+            msg.showWarming(e.getMessage());
+            return;
+        }
+
+        loadDataToTableModel();
+
+        msg.showInfo("Utworzono rezerwację!");
     }//GEN-LAST:event_reservedButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane CinemaHallPanel;
+    private javax.swing.JPanel ReservationPanel;
+    private javax.swing.JPanel SpacePanel;
+    private javax.swing.JTextField XInput;
+    private javax.swing.JTextField YInput;
     private javax.swing.JButton applySettingsButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listOfReservationChairsInHall;
+    private javax.swing.JButton button;
+    private javax.swing.JPanel configurationHallPanel;
+    private javax.swing.JLabel label;
+    private javax.swing.JLabel labelConfigCinemaHall;
+    private javax.swing.JLabel labelConfigSeparation1;
     private javax.swing.JTextField quantintyToReservedField;
     private javax.swing.JTextField quantityOfChairsInColumnHall;
     private javax.swing.JTextField quantityOfChairsInRowHall;
     private javax.swing.JButton reservedButton;
     // End of variables declaration//GEN-END:variables
+
 }

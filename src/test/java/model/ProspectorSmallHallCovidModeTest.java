@@ -29,7 +29,9 @@ public class ProspectorSmallHallCovidModeTest {
 
     @BeforeEach
     public void setUp() {
-        this.prospector = new Prospector( new CinemaHall(10, 10), 2, 1);
+        try {
+            this.prospector = new Prospector( new CinemaHall(10, 10), 2, 1);
+        } catch (SeatReservationException e) {}
     }
 
     /**

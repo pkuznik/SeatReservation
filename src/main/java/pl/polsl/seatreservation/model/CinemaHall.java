@@ -71,6 +71,14 @@ public class CinemaHall {
     }
 
     /**
+     *
+     * @return object instance of TwoDimensionalBox type Boolean
+     */
+    public TwoDimensionalBox<Boolean> getTwoDimensionalBox() {
+        return this.twoDimensionalBox;
+    }   
+
+    /**
      * method denotes the range of chairs provided by the cinema room facility
      * as reserved
      *

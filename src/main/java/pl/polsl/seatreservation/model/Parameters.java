@@ -6,14 +6,14 @@ import java.util.List;
  * Entity class for startup parameters
  *
  * @author Piotr Kuźnik
- * @version 2.0
+ * @version 3.0
  */
 public class Parameters {
 
     /** 
      * Default mode to run program
      */
-    public static final int UI_MODE_DEFAULT = 1;
+    public static final int UI_MODE_DEFAULT = 2;
     
     /**
      * Console mode to run program

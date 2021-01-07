@@ -94,4 +94,34 @@ public class TwoDimensionalBox<T> {
     public int getColumnSize() {
         return this.sizeY;
     }
+    
+    /**
+     * 
+     * @return Object two demensional type <T>
+     */
+    public T[][] toArray() {
+        T[][] data = (T[][]) new Object[this.sizeY][this.sizeX];
+        
+        int x =0, y = 0;
+        for (int i=1; i<=this.sizeY; i++) {
+            for (int j=1; j<=this.sizeX; j++) {
+                data[x][y++] = this.get(j, i);
+            }
+            x++;
+            y=0;
+        }
+        
+        return data;
+    }
+    
+    /**
+     * 
+     * @param y int number of column
+     * @return array object T 
+     */
+    public T[] rowToArray(int y) {
+         List<T> rows = this.contents.get(y);
+         
+         return (T[]) rows.toArray();
+    } 
 }
