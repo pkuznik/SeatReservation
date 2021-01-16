@@ -97,7 +97,7 @@ public class TwoDimensionalBox<T> {
     
     /**
      * 
-     * @return Object two demensional type <T>
+     * @return Object two demensional type T
      */
     public T[][] toArray() {
         T[][] data = (T[][]) new Object[this.sizeY][this.sizeX];

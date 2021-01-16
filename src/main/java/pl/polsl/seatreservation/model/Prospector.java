@@ -4,7 +4,7 @@ package pl.polsl.seatreservation.model;
  * Class implements algoright to reserved chairs in cinema hall.
  *
  * @author Piotr Kuźnik
- * @version 1.12
+ * @version 1.13
  */
 public class Prospector {
 
@@ -41,7 +41,22 @@ public class Prospector {
             throw new SeatReservationException("First argument must be instance of CinemaHall");
         }
     }
+    
+    /**
+     * 
+     * @return  number of space chair in row
+     */
+    public int getSpaceInRowChairBetweenReservation() {
+        return this.spaceX;
+    }
 
+    /**
+     * 
+     * @return number of space chair in column
+     */
+    public int getSpaceInColumnChairBetweenReservation() {
+        return this.spaceY;
+    }
     /**
      * method find next free chairs to reserved
      *
@@ -67,8 +82,11 @@ public class Prospector {
                 endX = numberChair;
                 if (this.hall.isChairReserved(numberRow, numberChair)) {
                     freeChairsInRow = 0;
-                    startX = numberChair + this.spaceX;
+                    numberChair += this.spaceX;
+                    startX = numberChair + 1;
                     startY = numberRow;
+                    
+                    continue;
                 } else {
                     freeChairsInRow++;
                 }

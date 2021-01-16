@@ -38,12 +38,14 @@ public class ReservationWindow extends javax.swing.JFrame {
 
         this.setTitle("Rezerwacja miejsc w sali kinowej");
 
-        this.quantityOfChairsInColumnHall.setText("" + controller.getHeightCinemaHall());
-        this.quantityOfChairsInRowHall.setText("" + controller.getWidthCinemaHall());
+        this.quantityOfChairsInColumnHall.setText("" + controller.getHall().getQuantityOfChairsInColumn());
+        this.quantityOfChairsInRowHall.setText("" + controller.getHall().getQuntityOfchairsInRow());
+        this.XInput.setText("" + controller.getProspector().getSpaceInRowChairBetweenReservation());
+        this.YInput.setText("" + controller.getProspector().getSpaceInColumnChairBetweenReservation());
     }
 
     private void buildCinemaHallPanel() {
-       
+
         this.table = new JTable();
         loadDataToTableModel();
 
@@ -57,11 +59,12 @@ public class ReservationWindow extends javax.swing.JFrame {
      * Create model for table
      */
     private void loadDataToTableModel() {
-         String[] columns = new String[this.controller.getWidthCinemaHall() + 1];
-        for (int i = 0; i < this.controller.getWidthCinemaHall(); i++) {
+        int widthCienamHall = this.controller.getHall().getQuntityOfchairsInRow();
+        String[] columns = new String[widthCienamHall + 1];
+        for (int i = 0; i < widthCienamHall; i++) {
             columns[i] = "" + (i + 1);
         }
-        columns[this.controller.getWidthCinemaHall()] = "Miejsce \\ Rząd";
+        columns[widthCienamHall] = "Miejsce \\ Rząd";
         this.table.setModel(new javax.swing.table.DefaultTableModel(
                 this.controller.getHall().getTwoDimensionalBox().toArray(),
                 columns
@@ -73,12 +76,11 @@ public class ReservationWindow extends javax.swing.JFrame {
 
         });
 
-
         table.getTableHeader().setDefaultRenderer(new TableHeaderRenderer());
-        table.getColumnModel().getColumn(this.controller.getWidthCinemaHall()).setCellRenderer(new TableHeaderRenderer());
-        table.getColumnModel().getColumn(this.controller.getWidthCinemaHall()).setMinWidth(130);
+        table.getColumnModel().getColumn(widthCienamHall).setCellRenderer(new TableHeaderRenderer());
+        table.getColumnModel().getColumn(widthCienamHall).setMinWidth(130);
 
-        for (int i = 0; i < this.controller.getWidthCinemaHall(); i++) {
+        for (int i = 0; i < widthCienamHall; i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(new TableChairCellRenderer());
         }
 
@@ -333,10 +335,11 @@ public class ReservationWindow extends javax.swing.JFrame {
 
     /**
      * Execute action after on click covid settings button
-     * @param evt 
+     *
+     * @param evt
      */
     private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
-         int spaceInRow, spaceInColumn;
+        int spaceInRow, spaceInColumn;
         MessageDialog msg = new MessageDialog();
         try {
             spaceInRow = Integer.parseInt(this.XInput.getText());

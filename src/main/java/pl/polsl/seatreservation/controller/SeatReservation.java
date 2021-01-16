@@ -60,26 +60,12 @@ public class SeatReservation {
         } catch (SeatReservationException e) {}
     }
     
-    /**
-     *
-     * @return quantity of chairs in one row
-     */
-    public int getWidthCinemaHall() {
-        return this.hall.getQuntityOfchairsInRow();
-    }
 
-    /**
-     *
-     * @return quantity of chairs in one column
-     */
-    public int getHeightCinemaHall() {
-        return this.hall.getQuantityOfChairsInColumn();
-    }
 
     /**
      *
      * @param quantityOfChairs quantity chairs to reserved
-     * @throws pl.polsl.seatreservation.model.SeatReservationException
+     * @throws SeatReservationException throw when param hall is null
      */
     public void reserveQuantityOfChairs(int quantityOfChairs) throws SeatReservationException {
         CombinationOfPlace coordinate;
@@ -93,10 +79,18 @@ public class SeatReservation {
     
     /**
      * 
-     * @return  object of CinemaHall
+     * @return object of CinemaHall
      */
     public CinemaHall getHall() {
         return this.hall;
+    }
+    
+    /**
+     * 
+     * @return Object of Prospector
+     */
+    public Prospector getProspector() {
+        return this.prospector;
     }
     
     /**
